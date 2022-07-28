@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { TaskContextProvider } from "./context/TaskContext";
 
-function App() {
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+import Notfound404 from "./pages/Notfound404";
+import { clientSupabase } from "./supabase/client";
+
+const App = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    clientSupabase.auth.onAuthStateChange((e, session) => {
+      if (!session) {
+        navigate("/login");
+      } else {
+        navigate("/");
+      }
+    });
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <TaskContextProvider>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/*" element={<Notfound404 />} />
+      </Routes>
+    </TaskContextProvider>
   );
-}
+};
 
 export default App;
