@@ -3,13 +3,14 @@ import {clientSupabase} from '../supabase/client'
 import {useNavigate} from 'react-router-dom'
 import TaskForm from '../components/TaskForm';
 import {useTask} from '../context/TaskContext'
+import TaskList from '../components/TaskList'
 
 const Home = () => {
 
   const navigate = useNavigate();
 
-  const obj = useTask();
-  console.log(obj)
+  const {tasks} = useTask();
+  console.log(tasks)
 
   useEffect(() => {
     if (!clientSupabase.auth.user()) {
@@ -34,6 +35,7 @@ const Home = () => {
           Add your Tasks here:
         </h5>
         <TaskForm />
+        <TaskList />
       </div>
     </div>
   );
