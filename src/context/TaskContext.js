@@ -14,8 +14,10 @@ export const TaskContextProvider = ({ children }) => {
 
     const [tasks, setTasks] = useState([]);
     const [adding, setAdding] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const getTasks = async (done = false) => {
+        setLoading(true)
 
         const user = clientSupabase.auth.user();
 
@@ -23,6 +25,7 @@ export const TaskContextProvider = ({ children }) => {
 
         if (error) throw error;
         setTasks(data)
+        setLoading(false)
     };
 
     const createTask = async (taskName) => {
@@ -44,7 +47,16 @@ export const TaskContextProvider = ({ children }) => {
         }
     }
 
-  return (<TaskContext.Provider value={{tasks,getTasks,createTask, adding}}>
+    const deleteTask = async (id) => { 
+        const user = clientSupabase.auth.user()
+        const {error, data} = await clientSupabase.from('tasks').delete().eq('userid',user.id).eq('id',id)
+
+        if (error) throw error;
+
+        setTasks(tasks.filter(task => task.id !== id))
+     };
+
+  return (<TaskContext.Provider value={{tasks,getTasks,createTask, adding, loading,deleteTask}}>
     {children}
   </TaskContext.Provider>);
 };

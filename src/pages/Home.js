@@ -2,15 +2,12 @@ import React,{useEffect} from "react";
 import {clientSupabase} from '../supabase/client'
 import {useNavigate} from 'react-router-dom'
 import TaskForm from '../components/TaskForm';
-import {useTask} from '../context/TaskContext'
 import TaskList from '../components/TaskList'
 
 const Home = () => {
 
   const navigate = useNavigate();
 
-  const {tasks} = useTask();
-  console.log(tasks)
 
   useEffect(() => {
     if (!clientSupabase.auth.user()) {
@@ -20,7 +17,7 @@ const Home = () => {
   
 
   return (
-    <div className="w-scree h-screen bg-slate-400 flex justify-center mx-auto items-center">
+    <div className="w-scree min-h-screen bg-slate-400 flex justify-center mx-auto items-center">
       <div className="mx-auto">
         <h1 className="text-4xl mx-auto px-4 text-center font-bold italic">
           Now, you are<br /> Logged In
