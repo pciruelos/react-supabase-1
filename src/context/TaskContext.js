@@ -56,7 +56,11 @@ export const TaskContextProvider = ({ children }) => {
         setTasks(tasks.filter(task => task.id !== id))
      };
 
-  return (<TaskContext.Provider value={{tasks,getTasks,createTask, adding, loading,deleteTask}}>
+     const updatedTask = async (id, updatedFields) => { 
+        
+      };
+
+  return (<TaskContext.Provider value={{tasks,getTasks,createTask, adding, loading,deleteTask,updatedTask}}>
     {children}
   </TaskContext.Provider>);
 };

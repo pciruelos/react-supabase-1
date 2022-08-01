@@ -3,11 +3,13 @@ import {useTask} from '../context/TaskContext'
 
 
 const TaskCard = ({taski}) => {
-const {deleteTask} = useTask()
+const {deleteTask, updatedTask} = useTask()
 
 const handleDelete = () => { deleteTask(taski.id) };
 
-const handleToggleDone = () => { alert('changeing') };
+const handleToggleDone = () => { 
+  updatedTask(taski.id, {done: !taski.done})
+};
 
   return (
         

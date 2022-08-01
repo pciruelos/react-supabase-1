@@ -32,6 +32,7 @@ const Login = () => {
           <br /> App Testing
         </h1>
         <h5 className="pt-8 pb-2 text-center">Login with Email:</h5>
+        <p>you can use <a href="https://10minutemail.com/">10minutemail.com</a>  for testing</p>
         <input
           type="email"
           name="email"

@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React,{useState,useEffect} from "react";
 import {clientSupabase} from '../supabase/client'
 import {useNavigate} from 'react-router-dom'
 import TaskForm from '../components/TaskForm';
@@ -7,6 +7,7 @@ import TaskList from '../components/TaskList'
 const Home = () => {
 
   const navigate = useNavigate();
+  const [showTaskDone, setShowTaskDone] = useState(false)
 
 
   useEffect(() => {
@@ -32,7 +33,11 @@ const Home = () => {
           Add your Tasks here:
         </h5>
         <TaskForm />
-        <TaskList />
+        <section>
+          <button onClick={ () => setShowTaskDone(!showTaskDone)}>Show Task Done</button>
+        </section>
+          
+        <TaskList done={showTaskDone}/>
       </div>
     </div>
   );
