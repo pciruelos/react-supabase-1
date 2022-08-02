@@ -57,7 +57,13 @@ export const TaskContextProvider = ({ children }) => {
      };
 
      const updatedTask = async (id, updatedFields) => { 
-        
+        const user = clientSupabase.auth.user()
+        const {error, data} = await clientSupabase.from('tasks').update(updatedFields).eq('userid',user.id).eq('id',id)
+
+        if (error) throw error;
+        console.log(data)
+
+        setTasks(tasks.filter(task => task.id !== id))
       };
 
   return (<TaskContext.Provider value={{tasks,getTasks,createTask, adding, loading,deleteTask,updatedTask}}>
